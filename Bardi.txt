@@ -1,0 +1,9 @@
+WATER FOUNTAIN BARDI/ AIR MINUM HEWAN								
+								
+								
+NO	KOMPONEN		PIN	                 FUNGSI			                   KONDISI	
+1	PUSH BUTTON		13	           RESET, ON/OFF UV & PUMP			AKTIF LOW/ INTERNAL PULLUP	
+2	LED 1/BIRU		16             INDIKATOR RESET & PAIRING		AKTIF LOW	
+3	LED UV		    5	           LED UV		                	AKTIF HIGH	
+4	SENSOR EPT		14	           SENSOR AIR			            INPUT DIGITAL HIGH	
+5	PUMP	    	4	           POMPA AIR			            AKTIF HIGH	

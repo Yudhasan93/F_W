@@ -46,19 +46,21 @@ void loop(){
                togglePUMP();
                toggleUV();
                }
-               else if (lastButtonState == LOW && currentButtonState == HIGH && EPT== LOW)
-               {
-                // ALL_OFF();
-               }
+            //    else if (lastButtonState == LOW && currentButtonState == HIGH && EPT== LOW)
+            //    {}
                else if (EPT == LOW)
                {
                    ALL_OFF();
+                   Serial.println("SEMUA MATI");
                }
                
             lastButtonState = currentButtonState;
+            Serial.print("UV State = ");
+            Serial.println(uv_State);
+            statusChanged = true;
     }
     
-    statusChanged = true;
+    
     
 }
 
