@@ -1,3 +1,5 @@
+                        /********WATER FOUNTAIN BARDI **********/
+
 #define BUTTON 13           //AKTIF LOW
 #define LED_BIRU 16         //AKTIF LOW
 #define UV 5                //AKTIF HIGH
@@ -9,6 +11,7 @@ int lastButtonState = LOW;
 int lastFlickerState = LOW;
 int currentButtonState;
 int EPT;
+char bacadata;
 
 unsigned long lastDebounceTime = 0;
 
@@ -31,6 +34,19 @@ void setup(){
 
 
 void loop(){
+    if(Serial.available()){
+        bacadata = Serial.read();
+        if(bacadata == 'A'){bacadata=1;}
+        if(bacadata == 'B'){bacadata=2;}
+        if(bacadata == 'C'){bacadata=3;}
+        if(bacadata == 'D'){bacadata=4;}
+    }
+
+    if (bacadata == 1){toggleUV();}
+    if (bacadata == 2){UV_OFF();}
+    if (bacadata == 3){togglePUMP();}
+    if (bacadata == 4){PUMP_OFF();}
+        
     EPT = digitalRead(EPT_SENSOR);
     currentButtonState = digitalRead(BUTTON);
     // Serial.println(EPT);
@@ -42,22 +58,25 @@ void loop(){
     if((millis() - lastDebounceTime) > DEBOUNCE_DELAY){
 
            if(lastButtonState == HIGH && currentButtonState == LOW && EPT== HIGH){
-               Serial.println("SEMUA MENYALA");
+               Serial.println("SEMUA MENYALA");          
                togglePUMP();
                toggleUV();
+               Serial.print("PUMP STATE = ");
+               Serial.println(pump_State);
+               statusChanged = true;
                }
-            //    else if (lastButtonState == LOW && currentButtonState == HIGH && EPT== LOW)
-            //    {}
+               else if(pump_State == false && currentButtonState == LOW){
+                Serial.println("SEMUA MATI");
+               }
                else if (EPT == LOW)
                {
                    ALL_OFF();
-                   Serial.println("SEMUA MATI");
+                   Serial.println("AIR KURANG");
+                   delay(500);
+                   statusChanged = false;
                }
                
             lastButtonState = currentButtonState;
-            Serial.print("UV State = ");
-            Serial.println(uv_State);
-            statusChanged = true;
     }
     
     
